@@ -1,7 +1,9 @@
 'use strict';
 
+var fs = require('fs');
 var expect = require('expect.js');
 var glob = require('glob');
+var path = require('path');
 
 var imageSize = require('..');
 
@@ -11,42 +13,22 @@ describe('Invalid Images', function () {
   var invalidFiles = glob.sync('specs/images/invalid/**/*.*');
   invalidFiles.forEach(function (file) {
 
-    describe(file, function() {
+    describe(file, function () {
+      var buffer = null;
+      var bufferSize = 8192;
 
-      var calculate = imageSize.bind(null, file);
+      beforeEach(function () {
+        buffer = new Buffer(bufferSize);
+        var filepath = path.resolve(file);
+        var descriptor = fs.openSync(filepath, 'r');
+        fs.readSync(descriptor, buffer, 0, bufferSize, 0);
+      });
 
-      it('should throw when called synchronously', function() {
-        expect(calculate).to.throwException(function (e) {
+      it('should throw when called synchronously', function () {
+        expect(imageSize.bind(null, buffer)).to.throwException(function (e) {
           expect(e).to.be.a(TypeError);
           expect(e.message).to.match(/^invalid \w+$/);
         });
-      });
-
-      it('should callback with error when called asynchronously', function(done) {
-        calculate(function (e) {
-          expect(e).to.be.a(TypeError);
-          expect(e.message).to.match(/^invalid \w+$/);
-          done();
-        });
-      });
-    });
-  });
-
-  describe('non-existent file', function() {
-
-    var calculate = imageSize.bind(null, 'fakefile.jpg');
-
-    it('should throw when called synchronously', function() {
-      expect(calculate).to.throwException(function (e) {
-        expect(e).to.be.a(Error);
-        expect(e.message).to.match(/^ENOENT.*$/);
-      });
-    });
-
-    it('should callback with error when called asynchronously', function(done) {
-      calculate(function (e) {
-        expect(e.message).to.match(/^ENOENT.*$/);
-        done();
       });
     });
   });

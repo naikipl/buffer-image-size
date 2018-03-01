@@ -1,12 +1,11 @@
-# image-size
+# buffer-image-size
 
-[![NPM Version](https://img.shields.io/npm/v/image-size.svg)](https://www.npmjs.com/package/image-size)
-[![Build Status](https://travis-ci.org/image-size/image-size.svg?branch=master)](https://travis-ci.org/image-size/image-size)
-[![NPM Downloads](https://img.shields.io/npm/dm/image-size.svg)](http://npm-stat.com/charts.html?package=image-size&author=&from=&to=)
-[![Coverage Status](https://img.shields.io/coveralls/image-size/image-size/master.svg)](https://coveralls.io/github/image-size/image-size?branch=master)
-[![devDependency Status](https://david-dm.org/image-size/image-size/dev-status.svg)](https://david-dm.org/image-size/image-size#info=devDependencies)
+A [Node](https://nodejs.org/en/) module to get dimensions of any image ~~file~~ buffer
 
-A [Node](https://nodejs.org/en/) module to get dimensions of any image file
+Fork of [image-size](https://github.com/image-size/image-size)
+
+This fork doesn't use the 'fs' and 'path' node modules.
+
 
 ## Supported formats
 
@@ -17,7 +16,7 @@ A [Node](https://nodejs.org/en/) module to get dimensions of any image file
 * JPEG
 * PNG
 * PSD
-* TIFF
+* ~~TIFF~~ (no buffer support)
 * WebP
 * SVG
 * DDS
@@ -36,40 +35,14 @@ npm install image-size --save
 
 ```javascript
 var sizeOf = require('image-size');
-var dimensions = sizeOf('images/funny-cats.png');
+var dimensions = sizeOf(yourImageBuffer);
 console.log(dimensions.width, dimensions.height);
 ```
 
 ### Asynchronous
 
-```javascript
-var sizeOf = require('image-size');
-sizeOf('images/funny-cats.png', function (err, dimensions) {
-  console.log(dimensions.width, dimensions.height);
-});
-```
-NOTE: The asynchronous version doesn't work if the input is a Buffer. Use synchronous version instead.
-
-### Using promises (node 8.x)
-```javascript
-var { promisify } = require('util');
-var sizeOf = promisify(require('image-size'));
-sizeOf('images/funny-cats.png')
-  .then(dimensions => { console.log(dimensions.width, dimensions.height); })
-  .catch(err => console.error(err));
-```
-
-### Async/Await (Typescript & ES7)
-```javascript
-var { promisify } = require('util');
-var sizeOf = promisify(require('image-size'));
-try {
-  const dimensions = await sizeOf('images/funny-cats.png');
-  console.log(dimensions.width, dimensions.height);
-} catch (err) {
-  console.error(err);
-}
-```
+No need for asynchronous usage in this fork.
+See the original instead: https://github.com/image-size/image-size
 
 ### Multi-size
 
@@ -79,7 +52,7 @@ An additional `images` array is available and returns the dimensions of all the 
 
 ```javascript
 var sizeOf = require('image-size');
-var images = sizeOf('images/multi-size.ico').images;
+var images = sizeOf(icoBuffer).images;
 for (const dimensions of images) {
   console.log(dimensions.width, dimensions.height);
 }
@@ -112,10 +85,8 @@ You can optionally check the buffer lengths & stop downloading the image after a
 
 ## Command-Line Usage (CLI)
 
-```
-npm install image-size --global
-image-size image1 [image2] [image3] ...
-```
+No CLI usage in this fork.
+See the original instead: https://github.com/image-size/image-size
 
 ## Credits
 

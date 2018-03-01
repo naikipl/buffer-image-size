@@ -6,7 +6,6 @@ var glob = require('glob');
 var path = require('path');
 
 var imageSize = require('..');
-var detector = require('../lib/detector');
 
 var sizes = {
   'default': {
@@ -84,51 +83,28 @@ describe('Valid images', function () {
   validFiles.forEach(function (file) {
 
     describe(file, function() {
-
-      var type, bufferDimensions, asyncDimensions;
+      var bufferDimensions;
       var bufferSize = 8192;
 
-      beforeEach(function (done) {
-
+      beforeEach(function () {
         var buffer = new Buffer(bufferSize);
         var filepath = path.resolve(file);
         var descriptor = fs.openSync(filepath, 'r');
         fs.readSync(descriptor, buffer, 0, bufferSize, 0);
-        type = detector(buffer);
 
-        // tiff cannot support buffers, unless the buffer contains the entire file
-        if (type !== 'tiff') {
-          bufferDimensions = imageSize(buffer);
-        }
-
-        imageSize(file, function (err, _dim) {
-          asyncDimensions = _dim;
-          done();
-        });
+        bufferDimensions = imageSize(buffer);
       });
 
       it('should return correct size for ' + file, function() {
         var expected = sizes[file] || sizes.default;
-        expect(asyncDimensions.width).to.be(expected.width);
-        expect(asyncDimensions.height).to.be(expected.height);
-        if (asyncDimensions.images) {
-          asyncDimensions.images.forEach(function (item, index) {
+        expect(bufferDimensions.width).to.be(expected.width);
+        expect(bufferDimensions.height).to.be(expected.height);
+        if (bufferDimensions.images) {
+          bufferDimensions.images.forEach(function (item, index) {
             var expectedItem = expected.images[index];
             expect(item.width).to.be(expectedItem.width);
             expect(item.height).to.be(expectedItem.height);
           });
-        }
-
-        if (type !== 'tiff') {
-          expect(bufferDimensions.width).to.be(expected.width);
-          expect(bufferDimensions.height).to.be(expected.height);
-          if (bufferDimensions.images) {
-            bufferDimensions.images.forEach(function (item, index) {
-              var expectedItem = expected.images[index];
-              expect(item.width).to.be(expectedItem.width);
-              expect(item.height).to.be(expectedItem.height);
-            });
-          }
         }
       });
     });
