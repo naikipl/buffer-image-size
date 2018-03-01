@@ -28,13 +28,13 @@ This fork doesn't use the 'fs' and 'path' node modules.
 ## Programmatic Usage
 
 ```
-npm install image-size --save
+npm install buffer-image-size --save
 ```
 
 ### Synchronous
 
 ```javascript
-var sizeOf = require('image-size');
+var sizeOf = require('buffer-image-size');
 var dimensions = sizeOf(yourImageBuffer);
 console.log(dimensions.width, dimensions.height);
 ```
@@ -51,7 +51,7 @@ If the target file is an icon (.ico) or a cursor (.cur), the `width` and `height
 An additional `images` array is available and returns the dimensions of all the available images
 
 ```javascript
-var sizeOf = require('image-size');
+var sizeOf = require('buffer-image-size');
 var images = sizeOf(icoBuffer).images;
 for (const dimensions of images) {
   console.log(dimensions.width, dimensions.height);
@@ -64,7 +64,7 @@ for (const dimensions of images) {
 var url = require('url');
 var http = require('http');
 
-var sizeOf = require('image-size');
+var sizeOf = require('buffer-image-size');
 
 var imgUrl = 'http://my-amazing-website.com/image.jpeg';
 var options = url.parse(imgUrl);
