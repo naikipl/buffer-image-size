@@ -1,8 +1,9 @@
 {
   "name": "buffer-image-size",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "get dimensions of any image buffer",
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
+  "types": "./lib/main.d.ts",
   "files": [
     "bin",
     "lib"
@@ -35,6 +36,9 @@
   ],
   "author": "netroy <aditya@netroy.in> (http://netroy.in/)",
   "license": "MIT",
+  "dependencies": {
+    "@types/node": "*"
+  },
   "devDependencies": {
     "coveralls": "^3.0.0",
     "eslint": "^4.13.1",
