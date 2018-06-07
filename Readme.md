@@ -1,11 +1,10 @@
-# buffer-image-size
+# react-native-buffer-image-size
 
 A [Node](https://nodejs.org/en/) module to get dimensions of any image ~~file~~ buffer
 
-Fork of [image-size](https://github.com/image-size/image-size)
+Fork of [buffer-image-size](https://github.com/evidentpoint/buffer-image-size)
 
-This fork doesn't use the 'fs' and 'path' node modules.
-
+This fork ensures compatibility with Browsers & React Native.
 
 ## Supported formats
 
@@ -21,53 +20,42 @@ This fork doesn't use the 'fs' and 'path' node modules.
 * SVG
 * DDS
 
-### Upcoming
-
-* SWF
-
-## Programmatic Usage
+## Install
 
 ```
-npm install buffer-image-size --save
+npm install react-native-buffer-image-size --save
 ```
 
-### Synchronous
+## Usage
 
 ```javascript
-var sizeOf = require('buffer-image-size');
-var dimensions = sizeOf(yourImageBuffer);
+var sizeOf = require('react-native-buffer-image-size');
+var dimensions = sizeOf(imageBuffer);
 console.log(dimensions.width, dimensions.height);
 ```
 
-### Asynchronous
+#### Multi-size
 
-No need for asynchronous usage in this fork.
-See the original instead: https://github.com/image-size/image-size
-
-### Multi-size
-
-If the target file is an icon (.ico) or a cursor (.cur), the `width` and `height` will be the ones of the first found image.
-
-An additional `images` array is available and returns the dimensions of all the available images
+If the target file is an icon (.ico) or a cursor (.cur), an `images` array is available and returns the dimensions of all the available images.
 
 ```javascript
-var sizeOf = require('buffer-image-size');
+var sizeOf = require('react-native-buffer-image-size');
 var images = sizeOf(icoBuffer).images;
 for (const dimensions of images) {
   console.log(dimensions.width, dimensions.height);
 }
 ```
 
-### Using a URL
+#### URL
 
 ```javascript
 var url = require('url');
 var http = require('http');
 
-var sizeOf = require('buffer-image-size');
+var sizeOf = require('react-native-buffer-image-size');
 
-var imgUrl = 'http://my-amazing-website.com/image.jpeg';
-var options = url.parse(imgUrl);
+var imageUrl = 'http://my-amazing-website.com/image.jpeg';
+var options = url.parse(imageUrl);
 
 http.get(options, function (response) {
   var chunks = [];
@@ -80,17 +68,4 @@ http.get(options, function (response) {
 });
 ```
 
-You can optionally check the buffer lengths & stop downloading the image after a few kilobytes.
-**You don't need to download the entire image**
-
-## Command-Line Usage (CLI)
-
-No CLI usage in this fork.
-See the original instead: https://github.com/image-size/image-size
-
-## Credits
-
-not a direct port, but an attempt to have something like
-[dabble's imagesize](https://github.com/dabble/imagesize/blob/master/lib/image_size.rb) as a node module.
-
-## [Contributors](Contributors.md)
+You can optionally check the buffer lengths & stop downloading the image after a few kilobytes. **You don't need to download the entire image**.

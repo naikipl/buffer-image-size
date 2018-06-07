@@ -1,22 +1,19 @@
 {
-  "name": "buffer-image-size",
-  "version": "0.6.4",
-  "description": "get dimensions of any image buffer",
+  "name": "react-native-buffer-image-size",
+  "version": "0.6.5",
+  "description": "Get dimensions of any image buffer",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
     "bin",
     "lib"
   ],
-  "engines": {
-    "node": ">=4.0"
-  },
   "scripts": {
     "pretest": "eslint lib specs",
     "test": "nyc mocha specs",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
-  "repository": "evidentpoint/buffer-image-size",
+  "repository": "naikipl/react-native-buffer-image-size",
   "keywords": [
     "image",
     "size",
@@ -34,10 +31,11 @@
     "ico",
     "cur"
   ],
-  "author": "netroy <aditya@netroy.in> (http://netroy.in/)",
+  "author": "naikipl <naikipl@gmai.com>",
   "license": "MIT",
   "dependencies": {
-    "@types/node": "*"
+    "@types/node": "*",
+    "buffer": "^5.1.0"
   },
   "devDependencies": {
     "coveralls": "^3.0.0",

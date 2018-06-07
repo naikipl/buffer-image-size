@@ -4,7 +4,7 @@ var fs = require('fs');
 var expect = require('expect.js');
 var glob = require('glob');
 var path = require('path');
-
+var Buffer = require('buffer/').Buffer;
 var imageSize = require('..');
 
 // Test all invalid files
